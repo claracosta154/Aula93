@@ -1,7 +1,8 @@
 package shopping;
 
 public class Product {
-    // atributos da classe
+
+    // Atributos da classe
     private Integer id;
     private String name;
     private String brand;
@@ -9,8 +10,7 @@ public class Product {
     private Double price;
     private Double stock;
 
-    // método construtor da classe - criando um novo objeto
-
+    //método construtor da classe - criando um novo objeto
     public Product(Integer id, String name, String brand, String description, Double price, Double stock){
 
         this.id = id;
@@ -19,10 +19,10 @@ public class Product {
         this.description = description;
         this.price = price;
         this.stock = stock;
+
     }
 
     //métodos getters e setters
-
     public Integer getId() {
         return id;
     }
@@ -30,9 +30,8 @@ public class Product {
     public void setId(Integer id) {
         this.id = id;
     }
-    
 
-    public String getname() {
+    public String getName() {
         return name;
     }
 
@@ -55,7 +54,7 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    
     public void setPrice(Double price) {
         this.price = price;
     }
@@ -64,10 +63,12 @@ public class Product {
         return price;
     }
 
-    public void setStock(Double stock) {
-        this.stock = stock;
-    }
-
     public Double getStock() {
         return stock;
     }
+
+    public void setStock(Double stock) {
+        this.stock = stock;
+    }
+    
+}
