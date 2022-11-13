@@ -9,6 +9,8 @@ public class UserScreen implements UserInterface{
     //criando o carrinho de compras
     Cart cart = new Cart();
 
+    List<Product> products = new Products().getProducts();
+
     //opção do usuário
     private int opt = 0;
 
@@ -42,7 +44,7 @@ public class UserScreen implements UserInterface{
 
     //iniciando a interface de usuário com as opções de menu
     @Override
-    public void menu() {
+    public void menu(){
 
         do{
             //renderiza o menu inicial
@@ -52,43 +54,50 @@ public class UserScreen implements UserInterface{
             getUserInput();
     
             //selecioda de acordo com a opção do usuário
-            switch (opt) {
-                case 1:
+            try {
 
-                    //lista de produtos em estoque
-                    displayProducts();
-
-                    //menu de produtos para adicionar ou remover do carrinho
-                    productsMenu();
-
-                    //opção do usuário
-                    getUserInput();
-
-                    //mostra o menu de opções para o usuário
-                    subMenu();
-                    break;
-                case 2:
-
-                    //mostra lista de produtos no carrinho
-                    showCart();
-                    break;
-                case 3:
-                    showCartQuantity();
-                    break;
-                case 4:
-                    showCartPrices();
-                    break;
-                case 5:
-                    showCartTotalPrice();
-                    break;
-                case 0:
-                    //Saindo fora
-                    System.out.println("Bye!");
-                    System.exit(0);
-                    break;
-                default:
-                    break;
+                switch (opt) {
+                    case 1:
+    
+                        //lista de produtos em estoque
+                        displayProducts();
+    
+                        //menu de produtos para adicionar ou remover do carrinho
+                        productsMenu();
+    
+                        //opção do usuário
+                        getUserInput();
+    
+                        //mostra o menu de opções para o usuário
+                        subMenu();
+                        break;
+                    case 2:
+    
+                        //mostra lista de produtos no carrinho
+                        showCart();
+                        break;
+                    case 3:
+                        showCartQuantity();
+                        break;
+                    case 4:
+                        showCartPrices();
+                        break;
+                    case 5:
+                        showCartTotalPrice();
+                        break;
+                    case 0:
+                        //Saindo fora
+                        System.out.println("Bye!");
+                        System.exit(0);
+                        break;
+                    default:
+                        //Lançando uma exceção de opção inválida
+                        throw new OptionException("Opcao invalida");
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
+            
         }while(opt != 0);
         
     }
@@ -97,24 +106,32 @@ public class UserScreen implements UserInterface{
     //menu de produtos para adicionar ou remover do carrinho
     private void subMenu() {
 
-        switch (opt) {
-            case 1:
-                addProductToCart();
-                showCart();
-                break;
-            case 2:
-                removeProductFromCart();
-                break;
-            default:
-                break;
+
+        try {
+            switch (opt) {
+                case 1:
+                    addProductToCart();
+                    showCart();
+                    break;
+                case 2:
+                    removeProductFromCart();
+                    break;
+                default:
+                    //Lançando exceção de opção inválida
+                    throw new OptionException("Opcao invalida");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+
+        
     }
 
     //exibindo a lista de produtos em estoque
     @Override
     public void displayProducts() {
         
-        List<Product> products = new Products().getProducts();
+        
 
         for (Product prod: products) {
             System.out.println("Id do produto: " + prod.getId());
@@ -135,7 +152,9 @@ public class UserScreen implements UserInterface{
 
         System.out.println("Sua opcao:");
         Scanner scanner = new Scanner(System.in);
+        
         opt = Integer.parseInt(scanner.nextLine());
+        
         return opt;
         
     }
@@ -144,7 +163,21 @@ public class UserScreen implements UserInterface{
     public void addProductToCart(){
 
         int id = getUserInput();
-        cart.addProduct(id);
+
+        try {
+            
+            if (id >= products.size()) {
+                throw new ProductNotFoundException("Produto nao encontrado");
+            } else {
+                cart.addProduct(id);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+
+        
 
     }
 

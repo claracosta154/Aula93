@@ -86,7 +86,7 @@ public class Cart extends CartOperations{
     public void listCartPrices() {
 
         //Stream map() que gera uma nova lista contendo os preços dos itens no carrinho
-        List<Double> cartPrices = cartItems.stream().map(cartItem -> cartItem.getPrice()).toList();
+        List<Double> cartPrices = ((Object) cartItems.stream().map(cartItem -> cartItem.getPrice())).toList();
         cartPrices.stream().forEach(cartPrice -> System.out.println(cartPrice));
     }
 
